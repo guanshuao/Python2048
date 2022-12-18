@@ -3,9 +3,9 @@ import numpy as np
 from game import Grid, Game
 from config import *
 
-config = Base()
+config = Fast()
 
-
+# 定义一个类，用于存储每个格子的信息
 def get_grid(tiles, directions):
     g = Grid(config.SIZE)
     g.tiles = tiles.copy()

@@ -24,7 +24,13 @@ WINDOW_H = config.WINDOW_HEIGHT #窗口高度
 font_h_w = 2 / 1  #字体高宽比
 g_w = GAME_WH / SIZE * 0.9  #格子宽度
 
+'''初始化一个游戏的主类，准备开始运行游戏。
 
+这段代码是一个 Python 程序的主函数，它定义了一个名为 Main 的类。在这个类中，定义了一个名为 init 的特殊方法，这个方法会在创建 Main 类的实例时被调用。
+
+在这个方法中，首先调用了 pygame 库的初始化函数，然后设置了窗口的标题和大小，设置了游戏的帧率，创建了一个游戏的实例，创建了一个 AI 类的实例。
+
+在这个方法中还有一些其他的变量，比如 self.state、self.catch_n 和 self.step_time 等，这些变量在程序的其他地方也会被使用。'''
 class Main():
     def __init__(self):
         global FPS
@@ -73,10 +79,11 @@ class Main():
 
 
     def draw_map(self):  #画出棋盘
+        '''使用两层循环来遍历棋盘上的每一个格子，并调用"draw_block"函数来绘制每个格子'''
         for y in range(SIZE):
             for x in range(SIZE):
                 self.draw_block((x, y), self.game.grid.tiles[y][x])
-
+        '''检查当前的游戏状态，如果游戏已经结束（即 "state" 变量为 "over" 或 "win"），则绘制一个半透明的黑色矩形，并调用一个名为 "draw_text" 的函数来在棋盘上绘制文本。文本内容根据当前的游戏状态而定，如果游戏已经结束则显示 "Game Over!"，如果游戏胜利则显示 "Victory!"。'''
         if self.state == 'over':
             pygame.draw.rect(self.screen, (0, 0, 0, 0.5),
                              (0, 0, GAME_WH, GAME_WH))
@@ -87,8 +94,11 @@ class Main():
                              (0, 0, GAME_WH, GAME_WH))
             self.draw_text('Victory!', (GAME_WH / 2, GAME_WH / 2), size=25, center='center')
 
-    # 画一个方格
+    # 在屏幕上绘制棋盘上的一个方块
+    ''''''
     def draw_block(self, xy, number):
+        '''xy 是一个元组，表示方块的位置，number 是一个整数，表示方块上的数字。'''
+        '''函数计算出每个方块的大小，并使用 Pygame 库绘制一个矩形。矩形的颜色由 "number" 参数决定，如果 "number" 小于等于 2048 则使用 "COLOR" 字典中的值，否则使用蓝色。'''
         one_size = GAME_WH / SIZE
         dx = one_size * 0.05
         x, y = xy[0] * one_size, xy[1] * one_size
@@ -96,6 +106,7 @@ class Main():
         pygame.draw.rect(self.screen, color,
                          (x + dx, y + dx, one_size - 2 * dx, one_size - 2 * dx))
         color = (20, 20, 20) if number <= 4 else (250, 250, 250)
+        '''如果方块上的数字不为 0，则调用 "draw_text" 函数在方块中间绘制数字。'''
         if number != 0:
             ln = len(str(number))
             if ln == 1:
@@ -111,7 +122,7 @@ class Main():
     def draw_info(self):
         self.draw_text('Scores：{}'.format(self.game.score), (GAME_WH + 50, 40))
 
-
+    '''设置背景颜色'''
     def set_bg(self, color=(255, 255, 255)):
         self.screen.fill(color)
 
@@ -203,6 +214,8 @@ class Button(pygame.sprite.Sprite):
         self.w, self.h = size
         self.is_show = True
 
+
+# 判断是否点击
     def is_click(self, xy):
         return (self.is_show and
                 self.x <= xy[0] <= self.x + self.w and

@@ -10,7 +10,7 @@ class Base:
                       "Please enter an integer not less than 3 as the number of orders for the game: \n"
                       "请输入一个不小于3的整数，作为方格的阶数："))
     FPS = 60
-    DEBUG = False
+    DEBUG = True
     COLORS = {
         '0': (205, 193, 180),# 0为空白砖块
         '2': (238, 228, 218),
