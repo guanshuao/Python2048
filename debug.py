@@ -6,7 +6,7 @@ from game import Game
 from ai import Ai
 from config import *
 
-config = Development()
+config = Fast()
 
 FPS = config.FPS
 SIZE = config.SIZE
