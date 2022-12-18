@@ -55,6 +55,19 @@ def H(z):
     else:
         return z
 
+'''这段代码定义了 Ai 类，并在类中定义了两个方法：
+
+__init__() 方法是类的构造函数，它在创建类的实例时自动调用。这个方法主要是创建一个 Grid 类的实例，并将其赋值给类的 g 属性。
+
+get_next() 方法用于获取下一步的最优移动方向。它接受一个参数 tiles，表示当前棋盘的状态。首先调用 get_num() 方法计算当前棋盘上有多少个格子是已经有数字的，如果超过棋盘的一半就随机返回 "U" 或 "D" 两个方向之一。'''
+
+'''gen_next首先会计算出一个数值 kn，它是当前棋盘的已有数字数量的平方与 20 之间的最小值，但是不能超过 40。
+
+然后使用 itertools 库的 product() 方法生成所有可能的移动序列，对于每个序列都调用 get_grid() 方法和 get_score() 方法来计算分数，并将结果存储在一个列表中。
+
+接着将所有序列的分数按照从小到大的顺序排序，然后从最高分的序列开始遍历，如果能够找到一个序列的第一个方向能够使得棋盘发生变化，就返回这个序列的第一个方向和平均分。如果所有序列都无法使棋盘发生变化，就返回最后一个序列的第一个方向和平均分'''
+
+
 
 class Ai:
     def __init__(self):
@@ -83,14 +96,20 @@ class Ai:
         # print('===',score_list[-1][0][0])
         return score_list[-1][0][0], score_list[-1][1] / kn
 
+
+    '''这个方法接受一个参数 tiles，表示棋盘的状态，它的作用是计算当前棋盘的分数。
+
+    这个方法中，最开始的三行注释掉的代码会使用 get_bj2() 和 get_bj() 两个方法计算出当前棋盘的四个角的分数，然后返回最高的分数。
+
+    目前的实现中，这个方法使用的是 get_bj2__4() 和 get_bj__4() 两个方法计算四个角的分数之和，然后将这个值乘以 2.8 并加上 get_bj__4() 返回的值，最后返回计算的结果。'''
     def get_score(self, tiles):
-        # 格子数量(越少越好)  金角银边（）
-        # bjs = [self.get_bj2(tiles)[i] * 2.8 + self.get_bj(tiles)[i] for i in range(4)]
-        # return max(bjs)
         a = self.get_bj2__4(tiles)
         b = self.get_bj__4(tiles)
         print(a, b)
         return a * 2.8 + b
+
+
+
 
     def debug(self, tiles):
         print('\n=======开始判断========')
@@ -119,7 +138,7 @@ class Ai:
         # print('===',score_list[-1][0][0])
         return score_list[-1][0][0]
 
-    # 空格子数量
+    '''get_num() 方法用于计算当前棋盘上有多少个格子是已经有数字的。它首先将棋盘的状态转换为一个 NumPy 数组，然后使用 NumPy 的 nonzero() 方法计算出数组中非零元素的个数。'''
     def get_num(self, tiles):
         # l = len(tiles)
         n = 0
