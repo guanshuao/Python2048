@@ -22,11 +22,12 @@ def printf(tiles):
         print()
 
 
-def H(z):
+def my_log2(z):
     if z == 0:
         return 0
     else:
         return z
+        # return np.math.log2(z)
 
 
 class Ai:
@@ -35,7 +36,7 @@ class Ai:
 
     def get_next(self, tiles):
         score_list = []
-        tn = self.get_num(tiles)
+        tn = self.get_tile_num(tiles)
         if tn >= self.g.size ** 2 / 3:
             return "RD"[np.random.randint(0, 2)], 0
         kn = min(max(tn ** 2, 20), 40)
@@ -93,7 +94,7 @@ class Ai:
         return score_list[-1][0][0]
 
     # 空格子数量
-    def get_num(self, tiles):
+    def get_tile_num(self, tiles):
         # l = len(tiles)
         n = 0
         for row in tiles:
@@ -185,11 +186,11 @@ class Ai:
             for x in range(l - 1, 0, -1):
                 z = tiles[y][x]
                 if tiles[y][x] < tiles[y][x - 1]:
-                    bj -= abs(H(tiles[y][x - 1]) - z)
+                    bj -= abs(my_log2(tiles[y][x - 1]) - z)
                 if tiles[y][x] < tiles[y + 1][x]:
-                    bj -= abs(H(tiles[y + 1][x]) - z)
+                    bj -= abs(my_log2(tiles[y + 1][x]) - z)
                 if tiles[y][x] < tiles[y + 1][x - 1]:
-                    bj -= abs(H(tiles[y + 1][x - 1]) - z)
+                    bj -= abs(my_log2(tiles[y + 1][x - 1]) - z)
         return bj
 
     def get_bj2__2(self, tiles):
@@ -199,11 +200,11 @@ class Ai:
             for x in range(0, l - 1):
                 z = tiles[y][x]
                 if tiles[y][x] < tiles[y][x + 1]:
-                    bj -= abs(H(tiles[y][x + 1]) - z)
+                    bj -= abs(my_log2(tiles[y][x + 1]) - z)
                 if tiles[y][x] < tiles[y + 1][x]:
-                    bj -= abs(H(tiles[y + 1][x]) - z)
+                    bj -= abs(my_log2(tiles[y + 1][x]) - z)
                 if tiles[y][x] < tiles[y + 1][x + 1]:
-                    bj -= abs(H(tiles[y + 1][x + 1]) - z)
+                    bj -= abs(my_log2(tiles[y + 1][x + 1]) - z)
         return bj
 
     def get_bj2__3(self, tiles):
@@ -213,11 +214,11 @@ class Ai:
             for x in range(0, l - 1):
                 z = tiles[y][x]
                 if tiles[y][x] < tiles[y][x + 1]:
-                    bj -= abs(H(tiles[y][x + 1]) - z)
+                    bj -= abs(my_log2(tiles[y][x + 1]) - z)
                 if tiles[y][x] < tiles[y - 1][x]:
-                    bj -= abs(H(tiles[y - 1][x]) - z)
+                    bj -= abs(my_log2(tiles[y - 1][x]) - z)
                 if tiles[y][x] < tiles[y - 1][x + 1]:
-                    bj -= abs(H(tiles[y - 1][x + 1]) - z)
+                    bj -= abs(my_log2(tiles[y - 1][x + 1]) - z)
         return bj
 
     def get_bj2__4(self, tiles):
@@ -227,11 +228,11 @@ class Ai:
             for x in range(l - 1, 0, -1):
                 z = tiles[y][x]
                 if z < tiles[y][x - 1]:
-                    bj -= abs(H(tiles[y][x - 1]) - z)
+                    bj -= abs(my_log2(tiles[y][x - 1]) - z)
                 if z < tiles[y - 1][x]:
-                    bj -= abs(H(tiles[y - 1][x]) - z)
+                    bj -= abs(my_log2(tiles[y - 1][x]) - z)
                 if z < tiles[y - 1][x - 1]:
-                    bj -= abs(H(tiles[y - 1][x - 1]) - z)
+                    bj -= abs(my_log2(tiles[y - 1][x - 1]) - z)
         return bj
 
 

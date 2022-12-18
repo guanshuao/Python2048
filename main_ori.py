@@ -1,53 +1,53 @@
-#导入相关库
-import pygame
-import os
-import time
-
+try:
+    import pygame, os, time
+except:
+    print('cmd run: pip3 install pygame -i https://mirrors.aliyun.com/pypi/simple')
+    exit()
 from pygame.locals import *
 from game import Game
 from ai import Ai
 from config import *
 
-#选择速度，有Fast，Slow可供选择
-config = Fast()
-# config = Slow()
+# config = Development()
+config = SupperFast()
 
-FPS = config.FPS #帧率
-SIZE = config.SIZE #棋盘大小
-DEBUG = config.DEBUG #是否显示调试信息
-COLOR = config.COLORS #颜色设置
-GAME_WH = config.GAME_WH  #游戏区域的宽度
-WINDOW_W = config.WINDOW_WIDTH #窗口宽度
-WINDOW_H = config.WINDOW_HEIGHT #窗口高度
+FPS = config.FPS
+SIZE = config.SIZE
+DEBUG = config.DEBUG
+colors = config.COLORS
+GAME_WH = config.GAME_WH
+WINDOW_W = config.WINDOW_W
+WINDOW_H = config.WINDOW_H
 
 # 格子中的字体
-font_h_w = 2 / 1  #字体高宽比
-g_w = GAME_WH / SIZE * 0.9  #格子宽度
+font_h_w = 2 / 1
+g_w = GAME_WH / SIZE * 0.9
 
+
+# font = pygame.font.SysFont('microsoftyahei', 20)
 
 class Main():
     def __init__(self):
         global FPS
         pygame.init()
-        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 50) # 设置窗口位置
-        self.set_win_wh(WINDOW_W, WINDOW_H, title='2048') # 设置窗口大小和标题
+        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 50)
+        self.set_win_wh(WINDOW_W, WINDOW_H, title='2048')
         self.state = 'start'
         self.fps = FPS
         self.catch_n = 0
-        self.clock = pygame.time.Clock()    # 创建一个Clock对象
-        self.game = Game(SIZE)           # 创建游戏对象
-        self.ai = Ai()                 # 创建AI对象
-        self.step_time = config.STEP_TIME  # 每步的时间间隔
+        self.clock = pygame.time.Clock()
+        self.game = Game(SIZE)
+        self.ai = Ai()
+        self.step_time = config.STEP_TIME
         self.next_f = ''
-        self.last_time = time.time()  # 上一步的时间
-        self.jm = -1 # 用于记录上一步的方向
+        self.last_time = time.time()
+        self.jm = -1
 
     def start(self):
-        # 加载按钮，分为两种状态
-        self.button_list = \
-        [
-            Button('start', 'Restart', (GAME_WH + 50, 150)), # 重新开始
-            Button('ai', 'Auto Off', (GAME_WH + 50, 250)), # 电脑托管模式
+        # 加载按钮
+        self.button_list = [
+            Button('start', '重新开始', (GAME_WH + 50, 150)),
+            Button('ai', '电脑托管', (GAME_WH + 50, 250)),
         ]
         self.run()
 
@@ -64,35 +64,33 @@ class Main():
             elif self.state == 'start':
                 self.game.start()
                 self.state = 'run'
-            self.set_bg((255, 255, 255))
+            self.set_bg((101, 194, 148))
             self.draw_info()
             self.draw_button(self.button_list)
             self.draw_map()
             self.update()
-        print('Exit')
+        print('退出游戏')
 
-
-    def draw_map(self):  #画出棋盘
+    def draw_map(self):
         for y in range(SIZE):
             for x in range(SIZE):
                 self.draw_block((x, y), self.game.grid.tiles[y][x])
-
         if self.state == 'over':
             pygame.draw.rect(self.screen, (0, 0, 0, 0.5),
                              (0, 0, GAME_WH, GAME_WH))
-            self.draw_text('Game Over!', (GAME_WH / 2, GAME_WH / 2), size=25, center='center')
-
+            self.draw_text('游戏结束！', (GAME_WH / 2, GAME_WH / 2), size=25, center='center')
         elif self.state == 'win':
             pygame.draw.rect(self.screen, (0, 0, 0, 0.5),
                              (0, 0, GAME_WH, GAME_WH))
-            self.draw_text('Victory!', (GAME_WH / 2, GAME_WH / 2), size=25, center='center')
+            self.draw_text('胜利！', (GAME_WH / 2, GAME_WH / 2), size=25, center='center')
 
     # 画一个方格
     def draw_block(self, xy, number):
         one_size = GAME_WH / SIZE
         dx = one_size * 0.05
         x, y = xy[0] * one_size, xy[1] * one_size
-        color = COLOR[str(int(number))] if number <= 2048 else (0, 0, 255)
+        # print(colors[str(int(number))])
+        color = colors[str(int(number))] if number <= 2048 else (0, 0, 255)
         pygame.draw.rect(self.screen, color,
                          (x + dx, y + dx, one_size - 2 * dx, one_size - 2 * dx))
         color = (20, 20, 20) if number <= 4 else (250, 250, 250)
@@ -107,10 +105,11 @@ class Main():
 
             self.draw_text(str(int(number)), (x + one_size * 0.5, y + one_size * 0.5 - size / 2), color, size, 'center')
 
-    # 显示得分
     def draw_info(self):
-        self.draw_text('Scores：{}'.format(self.game.score), (GAME_WH + 50, 40))
-
+        self.draw_text('分数：{}'.format(self.game.score), (GAME_WH + 50, 40))
+        if self.state == 'ai':
+            self.draw_text('间隔：{}'.format(self.step_time), (GAME_WH + 50, 60))
+            self.draw_text('评分：{}'.format(self.jm), (GAME_WH + 50, 80))
 
     def set_bg(self, color=(255, 255, 255)):
         self.screen.fill(color)
@@ -129,7 +128,7 @@ class Main():
                 self.draw_text(b.text, (b.x + b.w / 2, b.y + 9), size=18, center='center')
 
     def draw_text(self, text, xy, color=(0, 0, 0), size=18, center=None):
-        font = pygame.font.SysFont('microsoftyahei', round(size))
+        font = pygame.font.SysFont('simhei', round(size))
         text_obj = font.render(text, 1, color)
         text_rect = text_obj.get_rect()
         if center == 'center':
@@ -140,13 +139,15 @@ class Main():
         self.screen.blit(text_obj, text_rect)
 
     # 设置窗口大小
-    def set_win_wh(self, w, h, title='Python2048'):
+    def set_win_wh(self, w, h, title='python游戏'):
         self.screen2 = pygame.display.set_mode((w, h), pygame.DOUBLEBUF, 32)
         self.screen = self.screen2.convert_alpha()
         pygame.display.set_caption(title)
 
     def update(self):
         self.screen2.blit(self.screen, (0, 0))
+        # 刷新画面
+        # pygame.display.update()
         pygame.display.flip()
         time_passed = self.clock.tick(self.fps)
 
@@ -185,15 +186,18 @@ class Main():
                         self.state = i.name
                         if i.name == 'ai':
                             i.name = 'run'
-                            i.text = 'Auto On'
+                            i.text = '取消托管'
                         elif i.name == 'run':
                             i.name = 'ai'
-                            i.text = 'Auto Off'
+                            i.text = '电脑托管'
                         break
 
 
+def run():
+    Main().start()
 
-# 定义按钮类
+
+# 按钮类
 class Button(pygame.sprite.Sprite):
     def __init__(self, name, text, xy, size=(100, 50)):
         pygame.sprite.Sprite.__init__(self)
@@ -210,4 +214,4 @@ class Button(pygame.sprite.Sprite):
 
 
 if __name__ == '__main__':
-    Main().start()
+    run()

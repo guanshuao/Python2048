@@ -3,7 +3,7 @@ import numpy as np
 
 
 class Grid:
-    size = 10
+    size = 4
     tiles = []
     max_tile = 0
 
@@ -18,11 +18,11 @@ class Grid:
     def is_full(self):
         return 0 not in self.tiles
 
-    # 设置砖块
+    # 设置瓷砖
     def set_tiles(self, xy, number):
         self.tiles[xy[1]][xy[0]] = number
 
-    # 获取一个随机的坐标
+    # 获取一个随机的空坐标
     def get_random_xy(self):
         if not self.is_full():
             while 1:
@@ -31,15 +31,20 @@ class Grid:
                     return x, y
         return -1, -1
 
-    # 初始设置砖块
+    # 初始设置瓷砖
     def add_tile_init(self):
         self.add_random_tile()
         self.add_random_tile()
 
-    # 产生新砖块
+    # 添加一个随机的瓷砖
     def add_random_tile(self):
         if not self.is_full():
-            # 产生2的概率为0.9,否则产生4
+            # 产生2的概率为0.9
+            # q = 0.9
+            # for i in range(1,50):
+            #     if random.random() < q or i==50-1:
+            #         value = 2**i
+            #         break
             value = 2 if random.random() < 0.9 else 4
             self.set_tiles(self.get_random_xy(), value)
 

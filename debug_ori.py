@@ -1,6 +1,8 @@
-import pygame
-import time
-import os
+try:
+    import pygame, os, time
+except:
+    print('cmd run: pip3 install pygame -i https://mirrors.aliyun.com/pypi/simple')
+    exit()
 from pygame.locals import *
 from game import Game
 from ai import Ai
@@ -13,8 +15,8 @@ SIZE = config.SIZE
 DEBUG = config.DEBUG
 colors = config.COLORS
 GAME_WH = config.GAME_WH
-WINDOW_W = config.WINDOW_WIDTH
-WINDOW_H = config.WINDOW_HEIGHT
+WINDOW_W = config.WINDOW_W
+WINDOW_H = config.WINDOW_H
 
 class Main():
     def __init__(self):
@@ -35,8 +37,8 @@ class Main():
     def start(self):
         # 加载按钮
         self.button_list = [
-            Button('start','Restart',(GAME_WH+50,100)),
-            Button('ai','AutoPlay',(GAME_WH+50,200)),
+            Button('start','重新开始',(GAME_WH+50,100)),
+            Button('ai','电脑托管',(GAME_WH+50,200)),
         ]
         self.run()
 
@@ -65,11 +67,11 @@ class Main():
         if self.state == 'over':
             pygame.draw.rect(self.screen, (0,0,0,0.5),
                              (0, 0, GAME_WH, GAME_WH))
-            self.draw_text('Game Over!',(GAME_WH/2,GAME_WH/2),size=25,center='center')
+            self.draw_text('游戏结束！',(GAME_WH/2,GAME_WH/2),size=25,center='center')
         elif self.state == 'win':
             pygame.draw.rect(self.screen, (0,0,0,0.5),
                              (0, 0, GAME_WH, GAME_WH))
-            self.draw_text('Victory!',(GAME_WH/2,GAME_WH/2),size=25,center='center')
+            self.draw_text('胜利！',(GAME_WH/2,GAME_WH/2),size=25,center='center')
 
     # 画一个方格
     def draw_block(self,xy,number):
@@ -104,7 +106,7 @@ class Main():
                 self.draw_text(b.text,(b.x+b.w/2,b.y+9),size=18,center='center')
 
     def draw_text(self,text,xy,color=(0,0,0),size=18,center=None):
-        font = pygame.font.SysFont('microsoftyahei', size)
+        font = pygame.font.SysFont('STXingkai', size)
         text_obj = font.render(text, 1, color)
         text_rect = text_obj.get_rect()
         if center == 'center':
