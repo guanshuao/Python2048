@@ -1,20 +1,15 @@
 \documentclass[UTF8,AutoFakeBold,AutoFakeSlant,zihao=-4]{ctexart}
-\usepackage[a4paper,left=2.4cm,right=2.4cm,top=2.6cm,bottom=2.38cm,includeheadfoot]{geometry}
-\usepackage{fontspec}
-\usepackage{setspace}
-\usepackage{graphicx}
-\usepackage{fancyhdr}
-\usepackage{pdfpages}
-\usepackage{setspace}
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage{caption}
+\usepackage[a4paper,left=2.4cm,right=2.4cm,top=2.6cm,bottom=2.38cm,includeheadfoot]{geometry}   % 设置页面大小
+\usepackage{fontspec} % 字体
+\usepackage{setspace} % 设置行距
+\usepackage{graphicx} % 图片
+\usepackage{fancyhdr} % 页眉页脚
+\usepackage{pdfpages} % 插入 PDF
+\usepackage{setspace} % 设置行距
+\usepackage{booktabs} % 表格
+\usepackage{multirow} % 表格
+\usepackage{caption} % 图片和表格的 caption
 
-
-\usepackage[style=gb7714-2015,backend=biber]{biblatex}
-
-% 参考文献引用文件 refs.bib
-\addbibresource{misc/refs.bib}
 
 \newcommand{\coursename}{《Python程序设计》}
 \newcommand{\coursenumber}{U08M11077.01}
@@ -43,9 +38,7 @@
 
 \setromanfont{Times New Roman}
 
-%% 将中文楷体设置为 SIMKAI.TTF（如果需要）
-% \setCJKfamilyfont{zhkai}{[SIMKAI.TTF]}
-% \newcommand*{\kaiti}{\CJKfamily{zhkai}}
+
 
 % 设置文档标题深度
 \setcounter{tocdepth}{3}
@@ -76,18 +69,14 @@
 \begin{document}
 
 % 报告封面
-\input{misc/cover.tex}
+\input{cover.tex}
 
 
-
-%%插入一页目录，可以点击跳转到对应的章节
+%%插入一页目录
 \newpage
 \tableofcontents
 
 
-
-
-%%
 % 正文开始
 \pagestyle{fancy}
 % 正文从第一页开始计算页码
@@ -145,7 +134,7 @@ Windows 7/10 或Linux Ubuntu XX 或Mac OS XX
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.6\linewidth]{merge-sort-recursion-tree}
+  \includegraphics[width=0.6\linewidth]{img/merge-sort-recursion-tree}
   \caption{Merge sort recursion tree：一张示意图}
   \label{fig:mergesort}
 \end{figure}
