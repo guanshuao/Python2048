@@ -1,4 +1,3 @@
-
 \documentclass[UTF8,AutoFakeBold,AutoFakeSlant,zihao=-4]{ctexart}
 \usepackage[a4paper,left=2.4cm,right=2.4cm,top=2.6cm,bottom=2.38cm,includeheadfoot]{geometry}
 \usepackage{fontspec}
@@ -11,8 +10,7 @@
 \usepackage{multirow}
 \usepackage{caption}
 
-% 设置参考文献编译后端为 biber，引用格式为 GB/T7714-2015 格式
-% 参考文献使用宏包见 https://github.com/hushidong/biblatex-gb7714-2015
+
 \usepackage[style=gb7714-2015,backend=biber]{biblatex}
 
 % 参考文献引用文件 refs.bib
@@ -61,7 +59,7 @@
   beforeskip = 24bp plus 1ex minus .2ex,
   afterskip = 24bp plus .2ex,
   fixskip = true,
-  name = {,.\quad}
+  name = {,.}
   }
 }
 % 二级标题：小四，宋体，加粗，段前段后各半行
@@ -79,6 +77,13 @@
 
 % 报告封面
 \input{misc/cover.tex}
+
+
+
+%%插入一页目录，可以点击跳转到对应的章节
+\newpage
+\tableofcontents
+
 
 
 
@@ -101,15 +106,42 @@
 \setlength{\parindent}{1.02cm}
 
 % 内容开始
-\section{毕业设计（论文）选题的内容}
+\section{设计概述}
 开题报告总长度约 5 至 6 页，本部分重点介绍毕业设计选题的主要内容 \cite{LeCun2010}，宋体，小三，段落前后 0.5 行。
+\subsection{设计目的}
+（概括本课程设计完成的目标）
 
-\section{研究方案}
-\subsection{本选题的主要任务}
-本部分重点关注毕业设计的主要任务，宋体，四号，段落前后 0.5 行。
+\subsection{设计内容}
+（描述你将要设计的程序内容）
 
-\subsection{技术方案的分析、选择}
+\subsection{应用平台}
+Windows 7/10 或Linux Ubuntu XX 或Mac OS XX
+
+\subsection{开发工具}
+描述你使用的开发工具，例如PyCharm等
+
+
+\subsection{软件库}
+描述你使用的Python库和版本
+
+
+\subsection{测试数据}
+如果你的程序使用了一些测试数据，详细介绍你的测试数据，包括名称、来源、数量、用途等
+
+\section{详细设计}
+\subsection{总体方案}
+（详细描述你的程序的整体结构，包括程序的流程，各函数功能关系、参数传递等）
+
+\subsection{功能实现}
 此部分要分析任务书，并给出初步方案，要体现出复杂系统的概念，约写 2 至 3 页。
+
+\subsubsection{XXX功能的实现}
+（详细描述功能实现的原理和方法。）
+（并简要描述你的程序中各函数程序代码的实现（如算法、数据结构），不要大段的贴代码）
+
+\subsubsection{XXX功能的实现}
+（详细描述功能实现的原理和方法。）
+（并简要描述你的程序中各函数程序代码的实现（如算法、数据结构），不要大段的贴代码）
 
 \begin{figure}[!ht]
   \centering
@@ -118,11 +150,42 @@
   \label{fig:mergesort}
 \end{figure}
 
-\subsubsection{第一阶段}
-在第一阶段，我们准备……
 
-\subsection{实施技术方案所需的条件}
-此部分说明所需的软硬件等环境，建议使用表格的形式，方便表述。
+
+\section{完成情况}
+
+\subsection{程序运行结果}
+（程序运行的中间和最后的结果，并配上说明
+
+\subsection{程序使用说明}
+（程序的使用说明，包括程序的运行环境、运行方法、运行结果等）
+
+\subsection{主要研究过程}
+（详细描述你设计、调试程序的过程，类似开发日记）
+
+\section{设计总结}
+
+\subsection{成员分工}
+（详细描述每位成员姓名、学号、班级、院系，以及分工完成的任务）
+
+\subsection{存在的问题}
+（描述你的程序存在的问题，以及你的改进意见）
+
+\subsection{改进措施}
+（对你设计的程序，未来可以从哪些具体地方使用什么措施进行改进）
+
+\subsection{课程收获}
+（对每位成员参加本课程的感想和收获）
+
+\subsection{对课程的建议}
+
+\section{附录}
+\subsection{程序源代码}
+见电子压缩文档XXX.zip文件
+（无需粘贴程序源码）
+
+\subsection{其他}
+若有其他附录文件，可写于此处，组织好格式
 
 \begin{table}[!ht]
   \centering
@@ -138,16 +201,7 @@
   \end{tabular}
 \end{table}
 
-\subsection{存在的主要问题和技术关键}
-目前存在的主要问题是……
 
-正文，小四，行距 22 磅。
-
-\subsection{预期能够达到的研究目标}
-要包括最后提交的成果。
-
-\section{课题计划进度表}
-大致的课题计划进度如下表 \ref{tab:progress} 所示。
 
 \begin{table}[!ht]
   \centering
@@ -163,10 +217,6 @@
   \end{tabular}
 \end{table}
 
-注意：下文的参考文献应包含近 5 年内文献，经典文献除外。
 
-\section{参考文献}
-% 删除默认的「参考文献 / Reference」标题，使用上面定义的 section 标题
-\printbibliography[heading=none]
 
 \end{document}
