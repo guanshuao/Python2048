@@ -1,2 +1,3 @@
-numpy
-pygame
+numpy==1.24.0
+pygame==2.1.2
+wincertstore==0.2
