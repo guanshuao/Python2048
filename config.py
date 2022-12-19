@@ -5,7 +5,7 @@ class Base:
     #从用户输入获取游戏阶数
     SIZE = eval(input("Welcome to 2048 Mini Game! \n"
                       "欢迎来到2048小游戏!\n"
-                      "The developers of this program are Ao Guanshu, Tang Zhonglei, Wang Junsong and Wang Yifan \n"
+                      "The developers of this program are Guanshu AO, Zhonglei TANG, Junsong WANG and Yifan WANG \n"
                       "本游戏的开发者为敖冠舒、唐中磊、王骏松、王一帆\n"
                       "Please enter an integer not less than 3 as the number of orders for the game: \n"
                       "请输入一个不小于3的整数，作为方格的阶数："))

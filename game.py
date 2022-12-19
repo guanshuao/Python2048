@@ -171,7 +171,4 @@ class Game:
 
 if __name__ == '__main__':
     game = Game(env='testing')
-    # game.grid.set_tiles((0,0),2)
-    # print(game.grid)
-    # print(game.run('D'))
     print(game.move_hl([0, 0, 0, 2]))
