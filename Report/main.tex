@@ -9,6 +9,8 @@
 \usepackage{booktabs} % 表格
 \usepackage{multirow} % 表格
 \usepackage{caption} % 图片和表格的 caption
+\usepackage{subcaption} 
+\usepackage{float} 
 
 
 \newcommand{\coursename}{《Python程序设计》}
@@ -96,26 +98,66 @@
 
 % 内容开始
 \section{设计概述}
-开题报告总长度约 5 至 6 页，本部分重点介绍毕业设计选题的主要内容 \cite{LeCun2010}，宋体，小三，段落前后 0.5 行。
 \subsection{设计目的}
-（概括本课程设计完成的目标）
+本项目通过Python语言实现2048小游戏，从而掌握《Python程序设计》课程中的知识，更好地掌握Python语言的基本语法和编程思想，提高编程能力。与此同时，本项目还可以让我们更好地了解游戏开发的基本流程，从而更好地掌握游戏开发的基本知识，在此过程中队员分工合作，提高团队协作能力。
+
 
 \subsection{设计内容}
-（描述你将要设计的程序内容）
+本项目通过Python语言实现2048小游戏，实现游戏的基本功能，包括游戏界面的显示、游戏的开始、游戏的暂停、游戏的结束、游戏的重新开始、游戏的分数统计等功能。除此之外，还实现了游戏的难度选择、AI模式的实现等高级功能，通过AI模式，可以让玩家在游戏中获得更好的游戏体验。
 
 \subsection{应用平台}
-Windows 7/10 或Linux Ubuntu XX 或Mac OS XX
+\begin{table}[H]
+  \centering
+  \caption{硬件、软件环境一览表}
+  \label{tab:soft-hardware}
+  \begin{tabular}{@{}lcl@{}}
+    \toprule
+                              & 指标     & \multicolumn{1}{c}{版本参数} \\ \midrule
+    \multirow{2}{*}{硬件环境} & CPU      & AMD R7-5800H               \\ \cmidrule(l){2-3}
+                              & RAM      & 16 GB                         \\ \midrule
+    \multirow{2}{*}{软件环境} & 操作系统 & Windows 11 Pro 22H2 \\ \cmidrule(l){2-3}
+                              & Python   & Python 3.8.15                 \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+
 
 \subsection{开发工具}
-描述你使用的开发工具，例如PyCharm等
+\begin{table}[H]
+  \centering
+  \caption{开发工具一览表}
+  \label{tab:dev-tool}
+  \begin{tabular}{@{}lcl@{}}
+    \toprule
+    工具 & 版本 & 用途 \\ \midrule
+    PyCharm & 2022.3 & 代码编写 \\ 
+    Anaconda & 2022.11.1 & Python环境管理 \\ \bottomrule
+  \end{tabular}
+\end{table}
+
 
 
 \subsection{软件库}
-描述你使用的Python库和版本
+\begin{table}[H]
+  \centering
+  \caption{软件库一览表}
+  \label{tab:soft-lib}
+  \begin{tabular}{@{}lcl@{}}
+    \toprule
+    库名 & 版本 & 用途 \\ \midrule
+    pygame & 2.1.2 & 游戏界面的显示 \\ 
+    numpy & 1.24.0 & 数组的处理 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 
-\subsection{测试数据}
-如果你的程序使用了一些测试数据，详细介绍你的测试数据，包括名称、来源、数量、用途等
+
+
+\subsection{软件测试}
+本程序的测试数据主要包括游戏界面的显示、游戏的开始、游戏的暂停、游戏的结束、游戏的重新开始、游戏的分数统计等功能的测试，以及游戏的难度选择、自动托管模式的实现等高级功能的测试。其中，游戏界面的显示、游戏的开始、游戏的暂停、游戏的结束、游戏的重新开始、游戏的分数统计等功能的测试，主要通过人工测试的方式进行测试，而游戏的难度选择、自动托管模式的实现等高级功能的测试，主要通过自动化测试的方式进行测试。
+%另起一页
+\clearpage
 
 \section{详细设计}
 \subsection{总体方案}
