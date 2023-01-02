@@ -11,6 +11,29 @@
 \usepackage{caption} % 图片和表格的 caption
 \usepackage{subcaption} 
 \usepackage{float} 
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 
 
 \newcommand{\coursename}{《Python程序设计》}
@@ -145,7 +168,7 @@
   \begin{tabular}{@{}lcl@{}}
     \toprule
     库名 & 版本 & 用途 \\ \midrule
-    pygame & 2.1.2 & 游戏界面的显示 \\ 
+    pygame & 2.1.2 & 游戏界面的显示等 \\ 
     numpy & 1.24.0 & 数组的处理 \\
     \bottomrule
   \end{tabular}
@@ -168,23 +191,182 @@
 本项目使用四个.py文件实现上述功能，分别是main.py、config.py、ai.py和game.py，其中main.py是主函数，用于调度各个模块以实现功能；config.py是配置文件，主要负责游戏参数的设置；ai.py是AI算法文件，用于实现游戏的AI模式，game.py是游戏文件，用于绘制游戏界面，实现具体的游戏功能。
 
 \subsection{功能实现}
-此部分要分析任务书，并给出初步方案，要体现出复杂系统的概念，约写 2 至 3 页。
 
-\subsubsection{XXX功能的实现}
-（详细描述功能实现的原理和方法。）
-（并简要描述你的程序中各函数程序代码的实现（如算法、数据结构），不要大段的贴代码）
+\subsubsection{游戏基础配置}
 
-\subsubsection{XXX功能的实现}
-（详细描述功能实现的原理和方法。）
-（并简要描述你的程序中各函数程序代码的实现（如算法、数据结构），不要大段的贴代码）
+在config.py文件中，实现了一些基础配置的设置。如：
 
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=0.6\linewidth]{img/merge-sort-recursion-tree}
-  \caption{Merge sort recursion tree：一张示意图}
-  \label{fig:mergesort}
-\end{figure}
+\begin{itemize}
+  \item 游戏界面的大小
+  \item 方块和背景的颜色
+  \item 方块的阶数
+  \item 游戏帧率（默认为60）
+  \item AI模式的操作速度（默认为快）
+\end{itemize}
 
+
+\subsubsection{主函数的实现}
+
+初始化一个游戏的主类，准备开始运行游戏。
+
+这段代码是一个 Python 程序的主函数，它定义了一个名为 Main 的类。在这个类中，定义了一个名为 init 的特殊方法，这个方法会在创建 Main 类的实例时被调用。
+
+在init方法中，首先调用了 pygame 库的初始化函数，然后设置了窗口的标题和大小，设置了游戏的帧率，创建了一个游戏的实例，创建了一个 AI 类的实例。
+
+在这个方法中还有一些其他的变量，比如self.state、self.catch\_n和 self.step\_time等，这些变量在程序的其他地方也会被使用。
+%插入一段Python代码
+\begin{lstlisting}
+  class Main():
+  def __init__(self):
+      global FPS
+      pygame.init()
+      os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 50) # 设置窗口位置
+      self.set_win_wh(WINDOW_W, WINDOW_H, title='2048') # 设置窗口大小和标题
+      self.state = 'start'
+      self.fps = FPS
+      self.catch_n = 0
+      self.clock = pygame.time.Clock()    # 创建一个Clock对象
+      self.game = Game(SIZE)           # 创建游戏对象
+      self.ai = Ai()                 # 创建AI对象
+      self.step_time = config.STEP_TIME  # 每步的时间间隔
+      self.next_f = ''
+      self.last_time = time.time()  # 上一步的时间
+      self.jm = -1 # 用于记录上一步的方向
+  \end{lstlisting}
+
+
+\subsubsection{棋盘和方块的绘制}
+为了实现游戏界面的绘制，定义了一个名为draw\_map和一个draw\_block的方法，用于绘制棋盘和方块。
+
+在draw\_map方法中，首先使用两层循环来遍历棋盘上的每一个格子，并调用"draw\_block"函数来绘制每个格子；然后检查当前的游戏状态，如果游戏已经结束（即 "state" 变量为 "over" 或 "win"），则绘制一个半透明的黑色矩形，并调用一个名为 "draw\_text" 的函数来在棋盘上绘制文本。文本内容根据当前的游戏状态而定，如果游戏已经结束则显示 "Game Over!"，如果游戏胜利则显示 "Victory!"。
+
+\begin{lstlisting}[language=Python]
+  for y in range(SIZE):
+      for x in range(SIZE):
+          self.draw_block((x, y), self.game.grid.tiles[y][x])
+
+  if self.state == 'over':
+      pygame.draw.rect(self.screen, (0, 0, 0, 0.5),
+                       (0, 0, GAME_WH, GAME_WH))
+      self.draw_text('Game Over!', (GAME_WH / 2, GAME_WH / 2), size=25, center='center')
+
+  elif self.state == 'win':
+      pygame.draw.rect(self.screen, (0, 0, 0, 0.5),
+                       (0, 0, GAME_WH, GAME_WH))
+      self.draw_text('Victory!', (GAME_WH / 2, GAME_WH / 2), size=25, center='center')
+  \end{lstlisting}
+
+  在draw\_block方法中，使用xy表示一个元组，表示方块的位置，number 是一个整数，表示方块上的数字。draw\_block函数计算出每个方块的大小，并使用 Pygame 库绘制一个矩形。矩形的颜色由 "number" 参数决定，如果 "number" 小于等于 2048 则使用 "COLOR" 字典中的值，否则使用蓝色.如果方块上的数字不为 0，则调用 "draw\_text" 函数在方块中间绘制数字。
+\begin{lstlisting}[language=Python]
+  def draw_block(self, xy, number):
+  one_size = GAME_WH / SIZE
+  dx = one_size * 0.05
+  x, y = xy[0] * one_size, xy[1] * one_size
+  color = COLOR[str(int(number))] if number <= 2048 else (0, 0, 255)
+  pygame.draw.rect(self.screen, color,
+                   (x + dx, y + dx, one_size - 2 * dx, one_size - 2 * dx))
+  color = (20, 20, 20) if number <= 4 else (250, 250, 250)
+  if number != 0:
+      ln = len(str(number))
+      if ln == 1:
+          size = one_size * 1.2 / 2
+      elif ln <= 3:
+          size = one_size * 1.2 / ln
+      else:
+          size = one_size * 1.5 / ln
+
+      self.draw_text(str(int(number)), (x + one_size * 0.5, y + one_size * 0.5 - size / 2), color, size, 'center')
+\end{lstlisting}
+
+\subsubsection{方块移动的控制}
+为了实现对方块移动的控制，定义了一个名为get\_grid的函数。get\_grid() 函数接受两个参数：tiles 和 directions。tiles 参数表示当前棋盘的状态，是一个二维数组，存储了每个格子的值。directions 参数表示要进行的移动方向序列，是一个字符串的列表，其中每个字符表示一个方向，"U" 表示向上移动，"D" 表示向下移动，"L" 表示向左移动，"R" 表示向右移动。函数的作用是模拟移动棋盘，首先它会创建一个 Grid 类的实例，然后把当前的棋盘状态复制给这个实例的 tiles 属性，然后按照 directions 参数中的顺序对棋盘进行移动，每次移动后调用 add\_random\_tile() 方法在棋盘上随机添加一个新的格子。最后返回棋盘的状态。例如，调用 get\_grid([[2, 4, 8, 16], [32, 64, 128, 256], [512, 1024, 2048, 4096], [8192, 16384, 32768, 65536]], ["U", "L", "D", "R"]) 将会模拟向上、左、下、右四个方向依次移动，并在每次移动后随机添加一个新的格子，最终返回移动后的棋盘状态。
+
+\begin{lstlisting}[language=Python]
+  def get_grid(tiles, directions):
+  g = Grid(config.SIZE)
+  g.tiles = tiles.copy()
+  for direction in directions:
+      g.run(direction)
+      g.add_random_tile()
+  return g.tiles
+
+\end{lstlisting}
+
+\subsubsection{AI功能的实现}
+在ai.py这个文件中，定义了一个名为Ai的类，用以解决游戏自动操作的问题。首先，Ai 类包含了一个名为 get\_next() 的方法，它用于获取下一步的最优移动方向。它接受一个参数 tiles，表示当前棋盘的状态。首先调用 get\_num() 方法计算当前棋盘上有多少个格子是已经有数字的，如果超过棋盘的一半就随机返回 "U" 或 "D" 两个方向之一。然后gen\_next首先会计算出一个数值 kn，它是当前棋盘的已有数字数量的平方与 20 之间的最小值，但是不能超过 40。
+
+然后使用 itertools 库的 product() 方法生成所有可能的移动序列，对于每个序列都调用 get\_grid() 方法和 get\_score() 方法来计算分数，并将结果存储在一个列表中。每一种操作由两个方向（"U"、"L"、"R"、"D"）组成，分别表示上、左、右、下四个方向。然后，使用 get\_grid() 函数模拟执行这两步操作，并计算每一种操作的得分。最后，将所有得分按照从小到大的顺序排序，并返回得分最高的操作。
+
+在这段代码中，计算得分的方式是使用 get\_score() 函数，该函数又使用了另外两个函数：get\_bj2\_\_4() 和 get\_bj\_\_4()。前者用于计算棋盘上有多少对相邻的数字相等，后者用于计算棋盘上有多少个数字为 4。最后，将这两个数值相加并乘以一个常数，得到最终的得分。
+
+另外，这段代码中还有一个名为 debug() 的方法，它用于模拟执行单步操作，并输出每一步操作的结果。这可以帮助我们理解自动玩 2048 游戏的原理。
+
+还有，这段代码中还有一些其他的方法，例如：
+
+\begin{itemize}
+  \item get\_num() 函数用于计算当前棋盘上有多少个格子是已经有数字的。
+  \item H() 函数用于计算某个数字的 "深度"，也就是该数字的对数。这可以帮助我们评估某个数字在棋盘上的位置。
+\end{itemize}
+
+最终得到的最优方向是得分最高的操作中的第一个方向。具体来说，get\_next() 方法会使用 itertools.product() 函数枚举所有可能的两步操作，然后计算每一种操作的得分。最后，会将所有得分按照从小到大的顺序排序，并返回得分最高的操作中的第一个方向。
+
+例如，假设某一次调用 get\_next() 方法时，计算出了以下几组操作：
+
+\begin{itemize}
+  \item ("U", "L") -> 得分 = 10
+  \item ("U", "R") -> 得分 = 20
+  \item ("L", "D") -> 得分 = 15
+  \item ("R", "D") -> 得分 = 25
+\end{itemize}
+
+在这种情况下，最终得到的最优方向就是 "R"。因为在所有计算出的操作中，得分最高的操作是 ("R", "D")，并且这个操作的第一个方向就是 "R"。
+
+\begin{lstlisting}[language=Python]
+  class Ai:
+    def __init__(self):
+        self.g = Grid(config.SIZE)
+
+    def get_next(self, tiles):
+        score_list = []
+        tn = self.get_num(tiles)
+        if tn >= self.g.size ** 2 / 3:
+            return "RD"[np.random.randint(0, 2)], 0
+        kn = min(max(tn ** 2, 20), 40)
+        for directions in itertools.product("ULRD", repeat=3):
+            fen = []
+            for i in range(kn):
+                t_g = get_grid(tiles, directions)
+                fen.append(self.get_score(t_g))
+            print(directions, min(fen))
+            score_list.append([directions, min(fen)])
+        score_list = sorted(score_list, key=(lambda x: [x[1]]))
+        for d in score_list[::-1]:
+            self.g.tiles = tiles.copy()
+            if self.g.run(d[0][0], is_fake=False) != 0:
+                return d[0][0], d[1] / kn
+        self.g.tiles = tiles.copy()
+        return score_list[-1][0][0], score_list[-1][1] / kn
+\end{lstlisting}
+
+\subsubsection{其他功能的实现}
+在game.py中，我们还实现了一些其他的功能，例如：
+
+\begin{itemize}
+  \item is\_full() 方法用于判断棋盘是否已满，它会遍历棋盘的每个格子，空白返回False，否则True
+  \item get\_random\_xy() 方法用于获取一个随机的空白格子的坐标。它会调用 is\_zero() 方法判断某个位置的数字是否为 0，如果是，就返回这个位置的坐标，否则就继续随机生成坐标
+  \item set\_tiles() 方法用于设置棋盘上某个位置的数字。它接受两个参数，一个是位置的坐标，另一个是数字，然后通过坐标索引设置棋盘上对应位置的数字
+  \item add\_random\_tile() 方法，在棋盘上随机添加两个数字
+  \item add\_tile\_init() 方法用于初始化棋盘
+  \item \_\_init\_\_ 方法：初始化了类的 size 和 tiles 属性
+  \item is\_zero 方法：判断指定位置的砖块是否为0
+  \item get\_random\_xy 方法：获取一个随机的坐标
+  \item add\_tile\_init 方法：初始时设置两个砖块
+  \item move\_hl 方法：移动某一行或某一列
+  \item is\_over 方法：判断是否结束
+\end{itemize}
+
+%另起一页
+\clearpage
 
 
 \section{完成情况}
@@ -222,20 +404,6 @@
 \subsection{其他}
 若有其他附录文件，可写于此处，组织好格式
 
-\begin{table}[!ht]
-  \centering
-  \caption{硬件、软件环境}
-  \label{tab:soft-hardware}
-  \begin{tabular}{@{}lcl@{}}
-    \toprule
-                              & 指标     & \multicolumn{1}{c}{版本参数} \\ \midrule
-    \multirow{2}{*}{硬件环境} & CPU      & Intel i7-6500U               \\ \cmidrule(l){2-3}
-                              & RAM      & 8 GB                         \\ \midrule
-    \multirow{2}{*}{软件环境} & 操作系统 & \begin{tabular}[c]{@{}l@{}}Windows 10 Pro x86\_64\\  Ubuntu 18.04.3 LTS\end{tabular}    \\ \cmidrule(l){2-3}
-                              & Python   & Python 3.7.6                 \\ \bottomrule
-  \end{tabular}
-\end{table}
-
 
 
 \begin{table}[!ht]
@@ -251,6 +419,15 @@
     4    & 第四阶段的任务……          & 成功完成毕业设计              & 2020.4-2020.5  \\ \bottomrule
   \end{tabular}
 \end{table}
+
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.6\linewidth]{img/merge-sort-recursion-tree}
+  \caption{Merge sort recursion tree：一张示意图}
+  \label{fig:mergesort}
+\end{figure}
+
 
 
 
