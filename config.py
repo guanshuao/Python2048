@@ -34,14 +34,3 @@ class Slow(Base):
     STEP_TIME = 0.3
     ANIMATION = True
 
-
-
-
-
-
-
-
-
-
-
-
