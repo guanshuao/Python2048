@@ -48,12 +48,15 @@ class Main():
         self.last_time = time.time()  # 上一步的时间
         self.jm = -1 # 用于记录上一步的方向
 
+        self.hint_mode = False  # 添加一个提示模式的变量，初始值为 False
+
     def start(self):
         # 加载按钮，分为两种状态
         self.button_list = \
         [
             Button('start', 'Restart', (GAME_WH + 50, 150)), # 重新开始
             Button('ai', 'Auto Off', (GAME_WH + 50, 250)), # 电脑托管模式
+            Button('hint', 'Hint Off', (GAME_WH + 50, 350)), # 提示模式
         ]
         self.run()
 
@@ -122,7 +125,7 @@ class Main():
     def draw_info(self):
         self.draw_text('Scores：{}'.format(self.game.score), (GAME_WH + 50, 40))
 
-    '''设置背景颜色'''
+    '''设置背景颜色白色'''
     def set_bg(self, color=(255, 255, 255)):
         self.screen.fill(color)
 
@@ -215,7 +218,7 @@ class Button(pygame.sprite.Sprite):
         self.is_show = True
 
 
-# 判断是否点击
+# 判断是否点击按钮
     def is_click(self, xy):
         return (self.is_show and
                 self.x <= xy[0] <= self.x + self.w and
