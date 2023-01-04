@@ -1,4 +1,4 @@
-#导入相关库
+# 导入相关库
 import pygame
 import os
 import time
@@ -8,21 +8,21 @@ from game import Game
 from ai import Ai
 from config import *
 
-#选择速度，有Fast，Slow可供选择
+# 选择速度，有Fast，Slow可供选择
 config = Fast()
 # config = Slow()
 
-FPS = config.FPS #帧率
-SIZE = config.SIZE #棋盘大小
-DEBUG = config.DEBUG #是否显示调试信息
-COLOR = config.COLORS #颜色设置
-GAME_WH = config.GAME_WH  #游戏区域的宽度
-WINDOW_W = config.WINDOW_WIDTH #窗口宽度
-WINDOW_H = config.WINDOW_HEIGHT #窗口高度
+FPS = config.FPS  # 帧率
+SIZE = config.SIZE  # 棋盘大小
+DEBUG = config.DEBUG  # 是否显示调试信息
+COLOR = config.COLORS  # 颜色设置
+GAME_WH = config.GAME_WH  # 游戏区域的宽度
+WINDOW_W = config.WINDOW_WIDTH  # 窗口宽度
+WINDOW_H = config.WINDOW_HEIGHT  # 窗口高度
 
 # 格子中的字体
-font_h_w = 2 / 1  #字体高宽比
-g_w = GAME_WH / SIZE * 0.9  #格子宽度
+font_h_w = 2 / 1  # 字体高宽比
+g_w = GAME_WH / SIZE * 0.9  # 格子宽度
 
 '''初始化一个游戏的主类，准备开始运行游戏。
 
@@ -31,33 +31,38 @@ g_w = GAME_WH / SIZE * 0.9  #格子宽度
 在这个方法中，首先调用了 pygame 库的初始化函数，然后设置了窗口的标题和大小，设置了游戏的帧率，创建了一个游戏的实例，创建了一个 AI 类的实例。
 
 在这个方法中还有一些其他的变量，比如 self.state、self.catch_n 和 self.step_time 等，这些变量在程序的其他地方也会被使用。'''
+
+
 class Main():
     def __init__(self):
         global FPS
         pygame.init()
-        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 50) # 设置窗口位置
-        self.set_win_wh(WINDOW_W, WINDOW_H, title='2048') # 设置窗口大小和标题
+        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 50)  # 设置窗口位置
+        self.set_win_wh(WINDOW_W, WINDOW_H, title='2048')  # 设置窗口大小和标题
         self.state = 'start'
         self.fps = FPS
         self.catch_n = 0
-        self.clock = pygame.time.Clock()    # 创建一个Clock对象
-        self.game = Game(SIZE)           # 创建游戏对象
-        self.ai = Ai()                 # 创建AI对象
+        self.clock = pygame.time.Clock()  # 创建一个Clock对象
+        self.game = Game(SIZE)  # 创建游戏对象
+        self.ai = Ai()  # 创建AI对象
         self.step_time = config.STEP_TIME  # 每步的时间间隔
         self.next_f = ''
+        self.hint_next_f = ''  # 下一步的提示信息
+        self.hint_update = True  # 是否更新提示信息的标志
+        self.hint_text = ''  # 提示信息文本
         self.last_time = time.time()  # 上一步的时间
-        self.jm = -1 # 用于记录上一步的方向
+        self.jm = -1  # 用于记录上一步的方向
 
         self.hint_mode = False  # 添加一个提示模式的变量，初始值为 False
 
     def start(self):
         # 加载按钮，分为两种状态
         self.button_list = \
-        [
-            Button('start', 'Restart', (GAME_WH + 50, 150)), # 重新开始
-            Button('ai', 'Auto Off', (GAME_WH + 50, 250)), # 电脑托管模式
-            Button('hint', 'Hint Off', (GAME_WH + 50, 350)), # 提示模式
-        ]
+            [
+                Button('start', 'Restart', (GAME_WH + 50, 150)),  # 重新开始
+                Button('ai', 'Auto Off', (GAME_WH + 50, 250)),  # 电脑托管模式
+                Button('hint', 'Hint Off', (GAME_WH + 50, 350)),  # 提示模式
+            ]
         self.run()
 
     def run(self):
@@ -80,8 +85,7 @@ class Main():
             self.update()
         print('Exit')
 
-
-    def draw_map(self):  #画出棋盘
+    def draw_map(self):  # 画出棋盘
         '''使用两层循环来遍历棋盘上的每一个格子，并调用"draw_block"函数来绘制每个格子'''
         for y in range(SIZE):
             for x in range(SIZE):
@@ -99,6 +103,7 @@ class Main():
 
     # 在屏幕上绘制棋盘上的一个方块
     ''''''
+
     def draw_block(self, xy, number):
         '''xy 是一个元组，表示方块的位置，number 是一个整数，表示方块上的数字。'''
         '''函数计算出每个方块的大小，并使用 Pygame 库绘制一个矩形。矩形的颜色由 "number" 参数决定，如果 "number" 小于等于 2048 则使用 "COLOR" 字典中的值，否则使用蓝色。'''
@@ -124,8 +129,19 @@ class Main():
     # 显示得分
     def draw_info(self):
         self.draw_text('Scores：{}'.format(self.game.score), (GAME_WH + 50, 40))
+        if self.hint_mode:
+            if self.hint_text == 'D':
+                self.hint_text = 'down'
+            if self.hint_text == 'L':
+                self.hint_text = 'Left'
+            if self.hint_text == 'R':
+                self.hint_text = 'Right'
+            if self.hint_text == 'U':
+                self.hint_text = 'Up'
+            self.draw_text('Next step:{}'.format(self.hint_text), (GAME_WH + 70, 100))
 
     '''设置背景颜色白色'''
+
     def set_bg(self, color=(255, 255, 255)):
         self.screen.fill(color)
 
@@ -168,6 +184,12 @@ class Main():
     def my_event(self):
         if self.state == 'ai' and self.next_f == '':
             self.next_f, self.jm = self.ai.get_next(self.game.grid.tiles)
+            print(self.next_f)
+        if self.hint_mode and self.next_f == '':
+            self.hint_next_f, self.jm = self.ai.get_next(self.game.grid.tiles)
+            if self.hint_update:
+                self.hint_text = self.hint_next_f
+                self.hint_update = False
         for event in pygame.event.get():
             if event.type == QUIT:
                 self.state = 'exit'
@@ -176,12 +198,16 @@ class Main():
                     self.state = 'exit'
                 elif event.key in [K_LEFT, K_a] and self.state == 'run':
                     self.next_f = 'L'
+                    self.hint_update = True
                 elif event.key in [K_RIGHT, K_d] and self.state == 'run':
                     self.next_f = 'R'
+                    self.hint_update = True
                 elif event.key in [K_DOWN, K_s] and self.state == 'run':
                     self.next_f = 'D'
+                    self.hint_update = True
                 elif event.key in [K_UP, K_w] and self.state == 'run':
                     self.next_f = 'U'
+                    self.hint_update = True
                 elif event.key in [K_k, K_l] and self.state == 'ai':
                     if event.key == K_k and self.step_time > 0:
                         self.step_time *= 0.9
@@ -203,8 +229,17 @@ class Main():
                         elif i.name == 'run':
                             i.name = 'ai'
                             i.text = 'Auto Off'
+                        elif i.name == 'hint':
+                            i.name = 'hintOn'
+                            i.text = 'Hint On'
+                            self.state = 'run'
+                            self.hint_mode = True
+                        elif i.name == 'hintOn':
+                            i.name = 'hint'
+                            i.text = 'Hint Off'
+                            self.state = 'run'
+                            self.hint_mode = False
                         break
-
 
 
 # 定义按钮类
@@ -217,8 +252,7 @@ class Button(pygame.sprite.Sprite):
         self.w, self.h = size
         self.is_show = True
 
-
-# 判断是否点击按钮
+    # 判断是否点击按钮
     def is_click(self, xy):
         return (self.is_show and
                 self.x <= xy[0] <= self.x + self.w and
