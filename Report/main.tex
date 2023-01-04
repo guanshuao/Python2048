@@ -371,11 +371,70 @@
 
 \section{完成情况}
 
-\subsection{程序运行结果}
-（程序运行的中间和最后的结果，并配上说明
 
-\subsection{程序使用说明}
-（程序的使用说明，包括程序的运行环境、运行方法、运行结果等）
+\subsection{程序使用说明和运行结果}
+\begin{itemize}
+  \item 运行main.py文件，即可开始游戏。此时终端会显示程序开发的相关信息，如下图所示：
+    \begin{figure}[!ht]
+      \centering
+      \includegraphics[width=0.7\linewidth]{img/pic1.png}
+      \caption{控制台显示的内容}
+      \label{fig:mergesort}
+    \end{figure}
+  \item 键入一个整数并回车（此处以4为例），即可开始游戏。如下图所示：
+    \begin{figure}[!ht]
+      \centering
+      \includegraphics[width=0.7\linewidth]{img/pic2.png}
+      \caption{四阶方格的2048游戏}
+      \label{fig:mergesort}
+    \end{figure}
+  \item 此时可以通过键盘上的上下左右键来控制方块的移动，游戏界面的右上角会显示当前的得分。如下图所示：
+    \begin{figure}[!ht]
+      \centering
+      \includegraphics[width=0.7\linewidth]{img/pic3.png}
+      \caption{正常模式}
+      \label{fig:mergesort}
+    \end{figure}
+  \item 当游戏结束时，会显示游戏结束的提示，如下图所示：
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\linewidth]{img/pic4.png}
+      \caption{游戏结束}
+      \label{fig:mergesort}
+    \end{figure}
+  \item 在游戏过程中，点击Restart按钮，即可清空现有游戏进度重新开始。如下图所示：
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\linewidth]{img/pic5.png}
+      \caption{重新开始游戏}
+      \label{fig:mergesort}
+    \end{figure}
+  \item 右侧第二个按钮上显示Auto Off，表示现在处于手动模式。点击该按钮，即可切换到自动模式，在自动模式下，程序会自动寻找最优解并显示Auto On。再次点击按钮，即可恢复手动模式。具体情形如下图所示：
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\linewidth]{img/pic6.png}
+      \caption{自动模式}
+      \label{fig:mergesort}
+    \end{figure}
+  \item 右侧第三个按钮显示Hint Off，表示现在未处于提示模式。点击该按钮即可切换到提示模式，在提示模式下，程序会显示当前最优解的方向，但不会自动操作。再次点击按钮，即可关闭提示模式。具体情形如下图所示：
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\linewidth]{img/pic7.png}
+      \caption{提示模式}
+      \label{fig:mergesort}
+    \end{figure}
+\end{itemize}
+
+\subsection{特色功能}
+相较于其他传统2048游戏，本程序新增了高阶方格下的游戏模式。只需在游戏开始时在终端输入想要的阶数，即可开始游戏。如下图所示，分别为6阶、10阶、20阶、40阶。其余功能与4阶方格下的游戏模式相同，不再赘述。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.55\linewidth]{img/pic12.png}
+  \caption{高阶方格下的游戏模式}
+  \label{fig:mergesort}
+\end{figure}
+
+
 
 \subsection{主要研究过程}
 （详细描述你设计、调试程序的过程，类似开发日记）

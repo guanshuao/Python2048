@@ -234,7 +234,7 @@ class Main():
                             i.text = 'Hint On'
                             self.state = 'run'
                             self.hint_mode = True
-                        elif i.name == 'hintOn':
+                        elif i.name == 'hint On':
                             i.name = 'hint'
                             i.text = 'Hint Off'
                             self.state = 'run'

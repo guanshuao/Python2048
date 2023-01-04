@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.12.13)  3 JAN 2023 03:02
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.12.13)  4 JAN 2023 22:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -415,7 +415,32 @@ Package fontspec Info: Font family 'TimesNewRoman(0)' created for font 'Times
 (fontspec)             <->"Times New
 (fontspec)             Roman/BI/OT:script=latn;language=dflt;+smcp;mapping=tex-text;"
 
-(./main.aux)
+(./main.aux
+
+LaTeX Warning: Label `fig:mergesort' multiply defined.
+
+
+LaTeX Warning: Label `fig:mergesort' multiply defined.
+
+
+LaTeX Warning: Label `fig:mergesort' multiply defined.
+
+
+LaTeX Warning: Label `fig:mergesort' multiply defined.
+
+
+LaTeX Warning: Label `fig:mergesort' multiply defined.
+
+
+LaTeX Warning: Label `fig:mergesort' multiply defined.
+
+
+LaTeX Warning: Label `fig:mergesort' multiply defined.
+
+
+LaTeX Warning: Label `fig:mergesort' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
@@ -653,19 +678,43 @@ Overfull \hbox (25.30676pt too wide) in paragraph at lines 241--242
 []\TU/SimSun(0)/m/n/12.045 在 \TU/TimesNewRoman(0)/m/n/12.045 draw_map \TU/SimSun(0)/m/n/12.045 方 法 中，|  首 先 使 用 两 层 循 环 来 遍 历 棋 盘 上 的 每 一 个 格 子，|  并 调 用\TU/TimesNewRoman(0)/m/n/12.045 ”draw_block”
  []
 
-[5] [6] [7] [8] [9] [10] [11
+[5] [6] [7] [8] [9] [10]
+File: img/pic1.png Graphic file (type bmp)
+<img/pic1.png>
+File: img/pic2.png Graphic file (type bmp)
+<img/pic2.png>
+File: img/pic3.png Graphic file (type bmp)
+<img/pic3.png>
+File: img/pic4.png Graphic file (type bmp)
+<img/pic4.png>
+ [11
 
 ]
+File: img/pic5.png Graphic file (type bmp)
+<img/pic5.png>
+ [12]
+File: img/pic6.png Graphic file (type bmp)
+<img/pic6.png>
+File: img/pic7.png Graphic file (type bmp)
+<img/pic7.png>
+ [13]
+File: img/pic12.png Graphic file (type bmp)
+<img/pic12.png>
+ [14]
 File: img/merge-sort-recursion-tree.png Graphic file (type bmp)
 <img/merge-sort-recursion-tree.png>
- [12] (./main.aux) ) 
+ [15] [16] (./main.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 12775 strings out of 476179
- 312033 string characters out of 5813071
+ 12840 strings out of 476179
+ 313067 string characters out of 5813071
  880504 words of memory out of 5000000
- 33312 multiletter control sequences out of 15000+600000
+ 33369 multiletter control sequences out of 15000+600000
  475930 words of font info for 103 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  89i,12n,97p,1199b,1788s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (13 pages).
+Output written on main.pdf (17 pages).
