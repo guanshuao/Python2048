@@ -131,7 +131,7 @@ class Main():
         self.draw_text('Scores：{}'.format(self.game.score), (GAME_WH + 50, 40))
         if self.hint_mode:
             if self.hint_text == 'D':
-                self.hint_text = 'down'
+                self.hint_text = 'Down'
             if self.hint_text == 'L':
                 self.hint_text = 'Left'
             if self.hint_text == 'R':
