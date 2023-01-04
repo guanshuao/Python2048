@@ -138,7 +138,7 @@ class Main():
                 self.hint_text = 'Right'
             if self.hint_text == 'U':
                 self.hint_text = 'Up'
-            self.draw_text('Next step:{}'.format(self.hint_text), (GAME_WH + 70, 100))
+            self.draw_text('Next step:{}'.format(self.hint_text), (GAME_WH + 50, 100))
 
     '''设置背景颜色白色'''
 
