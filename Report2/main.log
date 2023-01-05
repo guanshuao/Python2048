@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.12.13)  6 JAN 2023 01:42
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.12.13)  6 JAN 2023 01:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -794,7 +794,7 @@ Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
 
-Overfull \hbox (16.62198pt too wide) in paragraph at lines 238--239
+Overfull \hbox (16.62198pt too wide) in paragraph at lines 241--242
 []\TU/SimSun(0)/m/n/12.045 在 \TU/TimesNewRoman(0)/m/n/12.045 draw_map \TU/SimSun(0)/m/n/12.045 方 法 中，|  首 先 使 用 两 层 循 环 来 遍 历 棋 盘 上 的 每 一 个 格 子，|  并 调 用 \TU/TimesNewRoman(0)/m/n/12.045 draw_block
  []
 
@@ -821,7 +821,7 @@ File: img/pic7.png Graphic file (type bmp)
 File: img/pic12.png Graphic file (type bmp)
 <img/pic12.png>
  [14] [15]
-Overfull \hbox (36.47331pt too wide) in paragraph at lines 457--465
+Overfull \hbox (36.47331pt too wide) in paragraph at lines 460--468
  [][] 
  []
 
