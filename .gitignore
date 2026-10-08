@@ -1,0 +1,34 @@
+# Python / Numba local caches
+__pycache__/
+*.py[cod]
+*.nbc
+*.nbi
+
+# Virtual environments and local output
+.venv/
+venv/
+env/
+tmp/
+build/
+dist/
+*.egg-info/
+*.log
+/python2048-screenshot.png
+/preview-*.png
+
+# Editor / operating system files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+.aws/
+.codex/
+.agents/
